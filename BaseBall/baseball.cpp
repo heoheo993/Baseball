@@ -1,10 +1,19 @@
 #include <stdexcept>
 
 using namespace std;
-void assertArgment(const std::string& guessNumber);
+
+
+struct GuessResult
+{
+	bool solved;
+	int strikes;
+	int balls;
+};
 class Baseball
 {
+
 private:
+	string question;
 	bool isDuplicatedChar(const string guessNumber)
 	{
 		if (guessNumber[0] == guessNumber[1] ||
@@ -31,11 +40,50 @@ private:
 			throw invalid_argument("Duplicated number");
 		}
 	}
+	int getStrikeNum(string guessNumber)
+	{
+		int StrikeNum = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			if (guessNumber[i] == question[i])
+				StrikeNum++;
+		}
+		return StrikeNum;
+	}
+	int getBallNum(string guessNumber)
+	{
+		int ballNum = 0;
+		for (char guess_ch : guessNumber){
+			for(char ques_ch : question){
+				if (guess_ch == ques_ch)
+					ballNum++;
+			}
+		}
+		ballNum -= getStrikeNum(guessNumber);
+		return ballNum;
+	}
+	bool isSolved(GuessResult result)
+	{
+		if (result.strikes == 3)
+			return true;
+		return false;
+	}
 
 public:
-	void guess(const string& guessNumber)
+	explicit Baseball(const string& question): question(question){
+		
+	}
+	
+	GuessResult guess(const string& guessNumber)
 	{
 		assertArgment(guessNumber);
+
+		GuessResult result = { false,0,0 };
+		result.strikes = getStrikeNum(guessNumber);
+		result.balls = getBallNum(guessNumber);
+		result.solved = isSolved(result);
+
+		return result;
 	}
 };
 
