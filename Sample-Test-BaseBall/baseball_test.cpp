@@ -1,6 +1,7 @@
 #include "pch.h"
+#include "../BaseBall/baseball.cpp"
+TEST(BaseballGame, ThrowExceptionWhenInputlength_error) {
+	Baseball game;
+	EXPECT_THROW(game.guess("123"), length_error);
 
-TEST(TestCaseName, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
 }
