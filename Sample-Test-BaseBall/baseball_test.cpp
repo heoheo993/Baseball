@@ -10,6 +10,7 @@ public:
 		{
 			game.guess(guessNumber);
 			
+			
 		}
 		catch (exception e)
 		{
@@ -19,9 +20,14 @@ public:
 };
 TEST_F(BaseballFixture, ThrowExceptionWhenInputlength_error)
 {
-	assertillegalArgument(string("14s"));
+	assertillegalArgument(string("1244"));
 }
 TEST_F(BaseballFixture, ThrowExceptionWhenInvalicChar)
 {
-	assertillegalArgument(string("13"));
+	assertillegalArgument(string("1s3"));
+}
+
+TEST_F(BaseballFixture, ThrowExceptionWhenDuplicatedChar)
+{
+	assertillegalArgument(string("141"));
 }
